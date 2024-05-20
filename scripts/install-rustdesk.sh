@@ -41,8 +41,8 @@ print_package_name
 # Check for a new version to install
 __registry_package_json=$(wget -O - -o /dev/null https://api.github.com/repos/rustdesk/rustdesk/releases/latest)
 __latest_package_version=$(echo ${__registry_package_json:?} | jq -r '.tag_name')
-__latest_package_id=$(echo "${__registry_package_json:?}" | jq -r '.assets[] | select(.name | endswith(".AppImage")) | .id' | head -n 1)
-__latest_package_url=$(echo "${__registry_package_json:?}" | jq -r '.assets[] | select(.name | endswith(".AppImage")) | .browser_download_url' | head -n 1)
+__latest_package_id=$(echo "${__registry_package_json:?}" | jq -r '.assets[] | select(.name | contains("x86_64") and endswith(".AppImage")) | .id' | head -n 1)
+__latest_package_url=$(echo "${__registry_package_json:?}" | jq -r '.assets[] | select(.name | contains("x86_64") and endswith(".AppImage")) | .browser_download_url' | head -n 1)
 print_step_header "Latest ${package_name:?} version: ${__latest_package_version:?}"
 
 
